@@ -5,7 +5,7 @@ cd /d "%~dp0"
 set VENV_DIR=%~dp0venv
 set ERROR_LOG=%~dp0deploy_error.log
 set REPORT_URL=http://localhost:8000/api/deploy/error
-set TASK_ID=11
+set TASK_ID=12
 
 echo ========================================
 echo   Deploy Pilot
@@ -18,7 +18,6 @@ echo Deploy started: %DATE% %TIME% >"%ERROR_LOG%"
 REM --- 0. Find Python ---
 echo [0/4] Locating Python...
 set PYTHON_EXE=
-py -3 --version >nul 2>&1 && set PYTHON_EXE=py -3 && goto :found_python
 where python >nul 2>&1 && set PYTHON_EXE=python && goto :found_python
 where python3 >nul 2>&1 && set PYTHON_EXE=python3 && goto :found_python
 echo [ERROR_CODE:0] Python not found. Install from https://python.org >>"%ERROR_LOG%"
@@ -26,6 +25,13 @@ goto :error
 
 :found_python
 echo   Python: %PYTHON_EXE%
+
+REM Verify venv support
+%PYTHON_EXE% -c "import venv" >nul 2>&1
+if errorlevel 1 (
+    echo [ERROR_CODE:0] Python at %PYTHON_EXE% missing venv module. Reinstall Python. >>"%ERROR_LOG%"
+    goto :error
+)
 
 REM --- 1. Virtual env ---
 echo [1/4] Creating virtual environment...
