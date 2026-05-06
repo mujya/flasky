@@ -5,7 +5,7 @@ cd /d "%~dp0"
 set VENV_DIR=%~dp0venv
 set ERROR_LOG=%~dp0deploy_error.log
 set REPORT_URL=http://localhost:8000/api/deploy/error
-set TASK_ID=6
+set TASK_ID=8
 
 echo ========================================
 echo   Deploy Pilot — 一键部署
