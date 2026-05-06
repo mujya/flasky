@@ -4,12 +4,12 @@ setlocal enabledelayedexpansion
 
 :: ============================================
 :: Deploy Pilot - 一键部署脚本
-:: 任务 ID: 14
-:: 查询码: 64DA7DFC
+:: 任务 ID: 15
+:: 查询码: F1881051
 :: ============================================
 
-set "QUERY_CODE=64DA7DFC"
-set "TASK_ID=14"
+set "QUERY_CODE=F1881051"
+set "TASK_ID=15"
 set "ERROR_API=http://10.254.1.15:8000/api/deploy/error/upload"
 set "LOG_FILE=%~dp0deploy_error.log"
 set "STEP="
@@ -40,7 +40,7 @@ echo ========================================
 
 powershell -Command ^
   "$log = ''; try { $log = Get-Content '%LOG_FILE%' -Raw } catch {}; ^
-   $body = @{task_id=14;error_log=\"Query: %QUERY_CODE%`n$log\"} | ConvertTo-Json; ^
+   $body = @{task_id=15;error_log=\"Query: %QUERY_CODE%`n$log\"} | ConvertTo-Json; ^
    try { Invoke-RestMethod -Uri '%ERROR_API%' -Method POST ^
      -Body $body -ContentType 'application/json' } catch {}"
 
