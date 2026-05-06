@@ -5,7 +5,7 @@ cd /d "%~dp0"
 set VENV_DIR=%~dp0venv
 set ERROR_LOG=%~dp0deploy_error.log
 set REPORT_URL=http://localhost:8000/api/deploy/error
-set TASK_ID=10
+set TASK_ID=11
 
 echo ========================================
 echo   Deploy Pilot
@@ -18,13 +18,9 @@ echo Deploy started: %DATE% %TIME% >"%ERROR_LOG%"
 REM --- 0. Find Python ---
 echo [0/4] Locating Python...
 set PYTHON_EXE=
+py -3 --version >nul 2>&1 && set PYTHON_EXE=py -3 && goto :found_python
 where python >nul 2>&1 && set PYTHON_EXE=python && goto :found_python
 where python3 >nul 2>&1 && set PYTHON_EXE=python3 && goto :found_python
-for %%d in (
-    "%LOCALAPPDATA%\Programs\Python\Python312\python.exe"
-    "%LOCALAPPDATA%\Programs\Python\Python311\python.exe"
-    "C:\Python312\python.exe" "C:\Python311\python.exe"
-) do if exist %%d set PYTHON_EXE=%%d && goto :found_python
 echo [ERROR_CODE:0] Python not found. Install from https://python.org >>"%ERROR_LOG%"
 goto :error
 
